@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 const ProfileInputCard = ({ dispatch, state, setEditMode }) => {
   const [validInp, setValidInp] = useState(true);
+  const [textAreaChar, setTextAreaChar] = useState(state.bio.length);
   const hadleClick = (e) => {
     e.preventDefault();
     setEditMode(false);
@@ -10,7 +11,8 @@ const ProfileInputCard = ({ dispatch, state, setEditMode }) => {
   const handleDispatch = (e) => {
     if (e.target.id !== "bio")
       setValidInp(/^[a-zA-Z\s]+$/.test(e.target.value) ? true : false);
-    if (e.target.value.length <= 0) setValidInp(true);
+    if (e.target.id === "mname" && e.target.value.length <= 0)
+      setValidInp(true);
     dispatch({
       type: e.target.id,
       inpValue: e.target.value,
@@ -18,16 +20,16 @@ const ProfileInputCard = ({ dispatch, state, setEditMode }) => {
   };
 
   return (
-    <form className='relative flex flex-col gap-y-6 max-w-3xl border-2 border-blue-200 rounded-lg p-6 py-10 shadow-xl shadow-slate-400 bg-lime-100'>
+    <form className='w-11/12 sm:max-w-fit relative flex flex-col gap-y-2 sm:gap-y-6 border-2 border-blue-200 rounded-lg sm:p-6 p-2 py-5 sm:py-10 shadow-xl shadow-slate-400 bg-lime-100'>
       <h1 className='text-center font-semibold text-2xl pb-6'>
         Update Information
       </h1>
       {!validInp && (
         <p className='text-red-700 self-center absolute top-20'>
-          All the fields must contain letters only and cannot be empty
+          Fields must contain letters and cannot be empty
         </p>
       )}
-      <div className='flex gap-x-2 relative'>
+      <div className='flex flex-col sm:flex-row  sm:gap-x-2 relative gap-y-2'>
         <input
           maxLength={10}
           id='fname'
@@ -60,11 +62,11 @@ const ProfileInputCard = ({ dispatch, state, setEditMode }) => {
         id='role'
         type='text'
         placeholder='Role'
-        className='p-1 py-2 rounded-md outline-none max-w-fit'
+        className='p-1 py-2 rounded-md outline-none sm:max-w-fit w-full'
         onChange={(e) => handleDispatch(e)}
         value={state.role}
       />
-      <div className='flex gap-x-2'>
+      <div className='flex flex-col sm:flex-row  sm:gap-x-2 relative gap-y-2'>
         <input
           id='town'
           type='text'
@@ -77,7 +79,7 @@ const ProfileInputCard = ({ dispatch, state, setEditMode }) => {
           id='district'
           type='text'
           placeholder='District'
-          className='p-1 rounded-md outline-none'
+          className='p-1 rounded-md outline-none py-2'
           onChange={(e) => handleDispatch(e)}
           value={state.district}
         />
@@ -85,18 +87,26 @@ const ProfileInputCard = ({ dispatch, state, setEditMode }) => {
           id='country'
           type='text'
           placeholder='Country'
-          className='p-1 rounded-md outline-none'
+          className='p-1 rounded-md outline-none py-2'
           onChange={(e) => handleDispatch(e)}
           value={state.country}
         />
       </div>
-      <div className='w-full'>
-        <label>Bio:</label>
+      <div className='w-full mt-3'>
+        <div className='flex justify-between pt-1 '>
+          <label>Bio:</label>
+          <p className={textAreaChar >= 180 && "text-red-600"}>
+            {textAreaChar}/190
+          </p>
+        </div>
         <textarea
           id='bio'
-          className='block w-full h-20 resize-none p-1 rounded-md outline-none'
+          className='block w-full h-36 sm:h-20 resize-none p-1 rounded-md outline-none'
           maxLength={190}
-          onChange={(e) => handleDispatch(e)}
+          onChange={(e) => {
+            handleDispatch(e);
+            setTextAreaChar(e.target.value.length);
+          }}
           value={state.bio}
         ></textarea>
       </div>

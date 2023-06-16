@@ -1,12 +1,12 @@
 const initialState = {
-  firstName: "Abishek",
+  firstName: "Roronoa",
   middleName: "",
-  lastName: "Parajuli",
-  role: "Web Developer",
-  town: "Haldibare",
-  district: "Jhapa",
-  country: "Nepal",
-  bio: "I am an undergraduate Computer Science (BSc. CSIT) student at Tribhuvan University with a keen interest in Web Development and Software Engineering. With a good foundation in JavaScript.",
+  lastName: "Zoro",
+  role: "Swordsman x King of Hell",
+  town: "Shimotsuki",
+  district: "East Blue",
+  country: "One Piece World",
+  bio: "Roronoa Zoro, also known as 'Pirate Hunter' Zoro, is a main combatant of the Straw Hat Pirates, publicly recognized as the right-hand man of his captain Monkey D. Luffy.",
 };
 
 const reducer = (state, action) => {
